@@ -3,18 +3,25 @@ import asyncio
 import httpx
 import time
 
+async def say(what, delay):
+    await asyncio.sleep(delay)
+    print(what)
+
 async def main():
-    urls = ["https://api.ipify.org?format=json"] * 20
-    async with httpx.AsyncClient() as client:
-        responses = []
-        for url in urls:
-            response = await client.get(url)
-            responses.append(response)
+    await asyncio.gather(
+        say("Hello", 5),
+        say("World", 5)
+    )
+
+asyncio.run(main()) # prints both words almost instantly
 
 
-if __name__ == "__main__":
-    import time
+def say_1(what, delay):
+    time.sleep(delay)
+    print(what)
 
-    start = time.time()
-    asyncio.run(main())
-    print(f"Execution time: {time.time() - start:.2f} seconds")
+def main_1():
+    say_1("Hello", 5)
+    say_1("World", 5)
+
+main_1()
