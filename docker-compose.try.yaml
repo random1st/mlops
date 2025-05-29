@@ -1,0 +1,14 @@
+services:
+  train_logistic_regression:
+    build: .
+    command: python train.py
+    volumes:
+      - .:/app
+
+  inference_logistic_regression:
+    build: .
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
